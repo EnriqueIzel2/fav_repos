@@ -1,7 +1,13 @@
-import HandleRoutes from "./src/routes";
+import HandleRoutes from "./routes";
+import GlobalStyle from "./styles/global";
 
 function App() {
-  return <HandleRoutes />;
+  return (
+    <>
+      <GlobalStyle />
+      <HandleRoutes />
+    </>
+  );
 }
 
 export default App;
