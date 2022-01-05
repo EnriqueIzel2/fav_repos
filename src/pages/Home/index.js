@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaGithub, FaPlus } from "react-icons/fa";
 
 import { Container, Form, SubmitButton } from "./styles";
 
 function Home() {
+  const [newRepo, setNewRepo] = useState("");
+
+  function handleInputChange(e) {
+    setNewRepo(e.target.value);
+  }
+
   return (
     <Container>
       <h1>
@@ -12,7 +18,12 @@ function Home() {
       </h1>
 
       <Form onSubmit={() => {}}>
-        <input type="text" placeholder="Adicionar repositório" />
+        <input
+          type="text"
+          placeholder="Adicionar repositório"
+          value={newRepo}
+          onChange={handleInputChange}
+        />
 
         <SubmitButton>
           <FaPlus color="#fff" size={14} />
