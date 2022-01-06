@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { FaGithub, FaPlus } from "react-icons/fa";
+import { FaGithub, FaPlus, FaSpinner } from "react-icons/fa";
 
 import api from "../../services/api";
 
@@ -58,7 +58,11 @@ function Home() {
         />
 
         <SubmitButton loading={loading ? 1 : 0}>
-          <FaPlus color="#fff" size={14} />
+          {loading ? (
+            <FaSpinner color="#FFF" size={14} />
+          ) : (
+            <FaPlus color="#fff" size={14} />
+          )}
         </SubmitButton>
       </Form>
     </Container>
