@@ -8,6 +8,7 @@ import { Container, Form, SubmitButton } from "./styles";
 function Home() {
   const [newRepo, setNewRepo] = useState("");
   const [repos, setRepos] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   function handleInputChange(e) {
     setNewRepo(e.target.value);
@@ -18,14 +19,22 @@ function Home() {
       e.preventDefault();
 
       async function submit() {
-        const response = await api.get(`repos/${newRepo}`);
+        setLoading(true);
 
-        const data = {
-          name: response.data.full_name,
-        };
+        try {
+          const response = await api.get(`repos/${newRepo}`);
 
-        setRepos([...repos, data]);
-        setNewRepo("");
+          const data = {
+            name: response.data.full_name,
+          };
+
+          setRepos([...repos, data]);
+          setNewRepo("");
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
       }
 
       submit();
