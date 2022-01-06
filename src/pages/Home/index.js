@@ -57,7 +57,7 @@ function Home() {
           onChange={handleInputChange}
         />
 
-        <SubmitButton>
+        <SubmitButton loading={loading ? 1 : 0}>
           <FaPlus color="#fff" size={14} />
         </SubmitButton>
       </Form>
