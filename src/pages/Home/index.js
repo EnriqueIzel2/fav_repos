@@ -10,10 +10,6 @@ function Home() {
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  function handleInputChange(e) {
-    setNewRepo(e.target.value);
-  }
-
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -40,6 +36,18 @@ function Home() {
       submit();
     },
     [newRepo, repos]
+  );
+
+  function handleInputChange(e) {
+    setNewRepo(e.target.value);
+  }
+
+  const handleDeleteRepo = useCallback(
+    (repo) => {
+      const findRepo = repos.filter((r) => r.name !== repo);
+      setRepos(findRepo);
+    },
+    [repos]
   );
 
   return (
@@ -70,7 +78,7 @@ function Home() {
         {repos.map((repo) => (
           <li key={repo.name}>
             <span>
-              <DeleteButton onClick={() => {}}>
+              <DeleteButton onClick={() => handleDeleteRepo(repo.name)}>
                 <FaTrash size={14} />
               </DeleteButton>
               {repo.name}
