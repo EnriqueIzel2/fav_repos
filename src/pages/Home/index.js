@@ -24,6 +24,12 @@ function Home() {
 
           const response = await api.get(`repos/${newRepo}`);
 
+          const hasRepo = repos.find((repo) => repo.name === newRepo);
+
+          if (hasRepo) {
+            throw new Error("Repositório já adicionado");
+          }
+
           const data = {
             name: response.data.full_name,
           };
