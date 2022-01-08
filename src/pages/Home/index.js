@@ -18,6 +18,10 @@ function Home() {
         setLoading(true);
 
         try {
+          if (newRepo === "") {
+            throw new Error("Digite um repositório válido");
+          }
+
           const response = await api.get(`repos/${newRepo}`);
 
           const data = {
