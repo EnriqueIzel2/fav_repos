@@ -9,6 +9,7 @@ function Home() {
   const [newRepo, setNewRepo] = useState("");
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(null);
 
   const handleSubmit = useCallback(
     (e) => {
@@ -16,6 +17,7 @@ function Home() {
 
       async function submit() {
         setLoading(true);
+        setAlert(null);
 
         try {
           if (newRepo === "") {
@@ -37,6 +39,7 @@ function Home() {
           setRepos([...repos, data]);
           setNewRepo("");
         } catch (error) {
+          setAlert(true);
           console.log(error);
         } finally {
           setLoading(false);
@@ -50,6 +53,7 @@ function Home() {
 
   function handleInputChange(e) {
     setNewRepo(e.target.value);
+    setAlert(null);
   }
 
   const handleDeleteRepo = useCallback(
@@ -67,7 +71,7 @@ function Home() {
         Meus repositórios
       </h1>
 
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} error={alert}>
         <input
           type="text"
           placeholder="Adicionar repositório"
