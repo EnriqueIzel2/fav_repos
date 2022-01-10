@@ -9,7 +9,7 @@ export default function HandleRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/repo/:repo" element={<Repo />} />
+        <Route path="/repos/:repo" element={<Repo />} />
       </Routes>
     </BrowserRouter>
   );
