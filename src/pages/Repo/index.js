@@ -8,6 +8,7 @@ function Repo() {
   const { repo: repoName } = useParams();
   const [repo, setRepo] = useState({});
   const [issues, setIssues] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadRepo() {
@@ -23,6 +24,7 @@ function Repo() {
 
       setRepo(repoData.data);
       setIssues(issuesData.data);
+      setLoading(false);
     }
 
     loadRepo();
