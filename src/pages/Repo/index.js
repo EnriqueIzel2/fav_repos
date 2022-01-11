@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import api from "../../services/api";
-import { Container } from "./styles";
+import { Container, Loading, Owner } from "./styles";
 
 function Repo() {
   const { repo: repoName } = useParams();
@@ -30,7 +30,19 @@ function Repo() {
     loadRepo();
   }, [repoName]);
 
-  return <Container></Container>;
+  if (loading) {
+    return <Loading>Carregando...</Loading>;
+  }
+
+  return (
+    <Container>
+      <Owner>
+        <img src={repo.owner.avatar_url} alt="Avatar do repositório" />
+        <h1>{repo.name}</h1>
+        <p>{repo.description}</p>
+      </Owner>
+    </Container>
+  );
 }
 
 export default Repo;
