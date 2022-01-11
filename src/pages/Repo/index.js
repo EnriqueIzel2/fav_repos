@@ -1,13 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-// import { Container } from './styles';
+import api from "../../services/api";
+import { Container } from "./styles";
 
 function Repo() {
-  return (
-    <div>
-      <h1>Repo</h1>
-    </div>
-  );
+  const { repo: repoName } = useParams();
+  const [repo, setRepo] = useState({});
+  const [issues, setIssues] = useState([]);
+
+  useEffect(() => {
+    async function loadRepo() {
+      const [repoData, issuesData] = await Promise.all([
+        api.get(`/repos/${repoName}`),
+        api.get(`/repos/${repoName}/issues`, {
+          params: {
+            state: "open",
+            per_page: 5,
+          },
+        }),
+      ]);
+
+      setRepo(repoData.data);
+      setIssues(issuesData.data);
+    }
+
+    loadRepo();
+  }, [repoName]);
+
+  return <Container></Container>;
 }
 
 export default Repo;
