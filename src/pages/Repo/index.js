@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 
 import api from "../../services/api";
-import { Container, Loading, Owner } from "./styles";
+import { BackButton, Container, Loading, Owner } from "./styles";
 
 function Repo() {
   const { repo: repoName } = useParams();
@@ -36,6 +37,9 @@ function Repo() {
 
   return (
     <Container>
+      <BackButton to="/">
+        <FaArrowLeft size={30} color="#000" />
+      </BackButton>
       <Owner>
         <img src={repo.owner.avatar_url} alt="Avatar do repositório" />
         <h1>{repo.name}</h1>
