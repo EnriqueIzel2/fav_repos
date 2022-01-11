@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Loading = styled.div`
   display: flex;
@@ -14,8 +15,14 @@ export const Container = styled.div`
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  padding: 0 30px;
+  padding: 30px;
   margin: 80px auto;
+`;
+
+export const BackButton = styled(Link)`
+  border: 0;
+  outline: 0;
+  background: transparent;
 `;
 
 export const Owner = styled.header`
