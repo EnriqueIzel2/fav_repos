@@ -96,7 +96,11 @@ function Repo() {
       </IssuesList>
 
       <PageActions>
-        <button type="button" onClick={() => handlePage("prev")}>
+        <button
+          disabled={page < 2}
+          type="button"
+          onClick={() => handlePage("prev")}
+        >
           voltar
         </button>
 
