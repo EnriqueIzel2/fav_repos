@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
 import api from "../../services/api";
-import { BackButton, Container, Loading, Owner } from "./styles";
+import { BackButton, Container, IssuesList, Loading, Owner } from "./styles";
 
 function Repo() {
   const { repo: repoName } = useParams();
@@ -45,6 +45,27 @@ function Repo() {
         <h1>{repo.name}</h1>
         <p>{repo.description}</p>
       </Owner>
+
+      <IssuesList>
+        {issues.map((issue) => (
+          <li key={String(issue.id)}>
+            <img src={issue.user.avatar_url} alt={issue.user.login} />
+
+            <div>
+              <strong>
+                <a href={issue.html_url} target="_blank" rel="noreferrer">
+                  {issue.title}
+                </a>
+
+                {issue.labels.map((label) => (
+                  <span key={String(label.id)}>{label.name}</span>
+                ))}
+              </strong>
+              <p>{issue.user.login}</p>
+            </div>
+          </li>
+        ))}
+      </IssuesList>
     </Container>
   );
 }
