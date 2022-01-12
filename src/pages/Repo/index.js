@@ -3,13 +3,21 @@ import { useParams } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
 import api from "../../services/api";
-import { BackButton, Container, IssuesList, Loading, Owner } from "./styles";
+import {
+  BackButton,
+  Container,
+  IssuesList,
+  Loading,
+  Owner,
+  PageActions,
+} from "./styles";
 
 function Repo() {
   const { repo: repoName } = useParams();
   const [repo, setRepo] = useState({});
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     async function loadRepo() {
@@ -30,6 +38,26 @@ function Repo() {
 
     loadRepo();
   }, [repoName]);
+
+  useEffect(() => {
+    async function loadIssues() {
+      const response = await api.get(`/repos/${repoName}/issues`, {
+        params: {
+          state: "open",
+          per_page: 5,
+          page,
+        },
+      });
+
+      setIssues(response.data);
+    }
+
+    loadIssues();
+  }, [page, repoName]);
+
+  function handlePage(action) {
+    setPage(action === "prev" ? page - 1 : page + 1);
+  }
 
   if (loading) {
     return <Loading>Carregando...</Loading>;
@@ -66,6 +94,16 @@ function Repo() {
           </li>
         ))}
       </IssuesList>
+
+      <PageActions>
+        <button type="button" onClick={() => handlePage("prev")}>
+          voltar
+        </button>
+
+        <button type="button" onClick={() => handlePage("next")}>
+          próxima
+        </button>
+      </PageActions>
     </Container>
   );
 }
