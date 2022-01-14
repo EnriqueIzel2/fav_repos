@@ -6,6 +6,7 @@ import api from "../../services/api";
 import {
   BackButton,
   Container,
+  FilterList,
   IssuesList,
   Loading,
   Owner,
@@ -18,6 +19,12 @@ function Repo() {
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [issuesFilter, setIssuesFilter] = useState([
+    { state: "all", label: "Todas", active: false },
+    { state: "open", label: "Abertas", active: true },
+    { state: "closed", label: "Fechadas", active: false },
+  ]);
+  const [filterIndex, setFilterIndex] = useState(1);
 
   useEffect(() => {
     async function loadRepo() {
@@ -25,7 +32,7 @@ function Repo() {
         api.get(`/repos/${repoName}`),
         api.get(`/repos/${repoName}/issues`, {
           params: {
-            state: "open",
+            state: issuesFilter.find((i) => i.active).state,
             per_page: 5,
           },
         }),
@@ -37,13 +44,13 @@ function Repo() {
     }
 
     loadRepo();
-  }, [repoName]);
+  }, [repoName, issuesFilter]);
 
   useEffect(() => {
     async function loadIssues() {
       const response = await api.get(`/repos/${repoName}/issues`, {
         params: {
-          state: "open",
+          state: issuesFilter[filterIndex].state,
           per_page: 5,
           page,
         },
@@ -53,10 +60,14 @@ function Repo() {
     }
 
     loadIssues();
-  }, [page, repoName]);
+  }, [page, repoName, filterIndex, issuesFilter]);
 
   function handlePage(action) {
     setPage(action === "prev" ? page - 1 : page + 1);
+  }
+
+  function handleIssuesFilter(index) {
+    setFilterIndex(index);
   }
 
   if (loading) {
@@ -73,6 +84,18 @@ function Repo() {
         <h1>{repo.name}</h1>
         <p>{repo.description}</p>
       </Owner>
+
+      <FilterList active={filterIndex}>
+        {issuesFilter.map((filter, index) => (
+          <button
+            key={index}
+            type="button"
+            onClick={() => handleIssuesFilter(index)}
+          >
+            {filter.label}
+          </button>
+        ))}
+      </FilterList>
 
       <IssuesList>
         {issues.map((issue) => (
