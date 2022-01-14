@@ -19,7 +19,7 @@ function Repo() {
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [issuesFilter, setIssuesFilter] = useState([
+  const [issuesFilter] = useState([
     { state: "all", label: "Todas", active: false },
     { state: "open", label: "Abertas", active: true },
     { state: "closed", label: "Fechadas", active: false },
