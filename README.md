@@ -1,7 +1,7 @@
 <h1 align="center">Fav Repos</h1>
 
 <p align="center">
-Site que você pode favoritas repositórios no Github.
+Site que você pode favoritar repositórios no Github.
 </p>
 
 ---
